@@ -28,3 +28,5 @@ module.exports.wrap = function () {
         done();
     });
 };
+
+module.exports.version = require('noder-js/package.json').version;
