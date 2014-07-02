@@ -8,7 +8,7 @@ module.exports.package = function (basePath) {
     return through.obj(function (file, encoding, done) {
         var fileContent = String(file.contents);
         var requires = findRequires(fileContent, true);
-        var filePath = path.relative(__dirname + '/../..' + (basePath || ''), file.path);
+        var filePath = path.relative(__dirname + '/../..' + (basePath || ''), file.path).replace(/\\/g, '/');
         file.contents = new Buffer(['define(', JSON.stringify(filePath), ', ', JSON.stringify(requires) + ', ',
                 moduleFunction.replace("$CONTENT$", fileContent), ');'].join(''));
         this.push(file);
