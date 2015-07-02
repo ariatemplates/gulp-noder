@@ -10,7 +10,7 @@ module.exports.package = function (basePath) {
         var requires = findRequires(fileContent, true);
         var filePath = path.relative(__dirname + '/../..' + (basePath || ''), file.path).replace(/\\/g, '/');
         file.contents = new Buffer(['define(', JSON.stringify(filePath), ', ', JSON.stringify(requires) + ', ',
-                moduleFunction.replace("$CONTENT$", fileContent), ');'].join(''));
+                moduleFunction.replace("$CONTENT$", function () { return fileContent; } ), ');'].join(''));
         this.push(file);
         done();
     });
